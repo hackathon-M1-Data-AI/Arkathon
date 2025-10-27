@@ -270,6 +270,99 @@ def draw_splatter(layer, origin, angle_deg, color, rng, count=80, spread=180):
         dl.ellipse([x - r, y - r, x + r, y + r], fill=color + (alpha,))
 
 
+def draw_spiral(layer, center, size, color, rng, turns=3):
+    """
+    Dessine une spirale organique avec variations de rayon.
+    """
+    dl = ImageDraw.Draw(layer, "RGBA")
+    cx, cy = center
+    points = []
+    steps = 120
+    
+    for i in range(steps):
+        t = i / steps
+        angle = turns * 2 * math.pi * t
+        radius = size * t * (0.8 + 0.4 * rng.uni())
+        
+        # Ajouter variation organique
+        radius *= (1 + 0.2 * math.sin(8 * angle + rng.uni() * 2 * math.pi))
+        
+        x = cx + radius * math.cos(angle)
+        y = cy + radius * math.sin(angle)
+        points.append((x, y))
+    
+    # Dessiner la spirale avec épaisseur variable
+    for i in range(len(points) - 1):
+        t = i / len(points)
+        alpha = int(150 + 100 * (1 - t))
+        width = max(1, int(8 * (1 - t * 0.7)))
+        dl.line([points[i], points[i + 1]], fill=color + (alpha,), width=width)
+
+
+def draw_wave(layer, center, size, color, rng):
+    """
+    Dessine des motifs d'ondes fluides et organiques.
+    """
+    dl = ImageDraw.Draw(layer, "RGBA")
+    cx, cy = center
+    
+    wave_count = 3 + int(rng.uni(0, 5))
+    
+    for wave in range(wave_count):
+        points = []
+        steps = 60
+        
+        start_angle = rng.uni(0, 2 * math.pi)
+        frequency = 2 + rng.uni(0, 4)
+        amplitude = size * (0.2 + 0.3 * rng.uni())
+        
+        for i in range(steps):
+            t = i / steps
+            angle = start_angle + 2 * math.pi * t
+            base_radius = size * (0.3 + 0.4 * t)
+            
+            wave_offset = amplitude * math.sin(frequency * angle)
+            radius = base_radius + wave_offset
+            
+            x = cx + radius * math.cos(angle)
+            y = cy + radius * math.sin(angle)
+            points.append((x, y))
+        
+        # Connecter au début pour fermer la forme
+        points.append(points[0])
+        
+        alpha = int(60 + 80 * (1 - wave / wave_count))
+        width = 2 + int(rng.uni(0, 4))
+        
+        for i in range(len(points) - 1):
+            dl.line([points[i], points[i + 1]], fill=color + (alpha,), width=width)
+
+
+def draw_cloud(layer, center, size, color, rng):
+    """
+    Dessine un nuage de particules avec distribution organique.
+    """
+    dl = ImageDraw.Draw(layer, "RGBA")
+    cx, cy = center
+    
+    particle_count = 40 + int(rng.uni(0, 80))
+    
+    for i in range(particle_count):
+        # Utiliser distribution gaussienne pour clustering naturel
+        distance = size * abs(rng.uni(-1, 1) + rng.uni(-1, 1)) * 0.5
+        angle = rng.uni(0, 2 * math.pi)
+        
+        x = cx + distance * math.cos(angle)
+        y = cy + distance * math.sin(angle)
+        
+        particle_size = 1 + int(rng.uni(0, 8) * (1 - distance / size))
+        alpha = int(60 + 120 * (1 - distance / size))
+        
+        dl.ellipse([x - particle_size, y - particle_size, 
+                   x + particle_size, y + particle_size], 
+                  fill=color + (alpha,))
+
+
 def render_expressive_from_csv(csv_path, out_path="abstract_expressive_no_arcs.png"):
     """
     The function `render_expressive_from_csv` reads data from a CSV file, processes it to render
@@ -330,8 +423,8 @@ def render_expressive_from_csv(csv_path, out_path="abstract_expressive_no_arcs.p
         color = pal["paint"][sha_int(str(row)) % len(pal["paint"])]
 
         shape = str(row.get("shape", "")).strip().lower()
-        # REMAP: supprimer arcs → remplacer par 'stroke'
-        if shape not in ("blob", "stroke", "splatter"):
+        # Support des nouvelles formes d'art abstrait
+        if shape not in ("blob", "stroke", "splatter", "spiral", "wave", "cloud"):
             shape = "stroke"
 
         if shape == "blob":
@@ -359,6 +452,13 @@ def render_expressive_from_csv(csv_path, out_path="abstract_expressive_no_arcs.p
                 count=60 + int(vigor * 80),
                 spread=120 + int(size),
             )
+        elif shape == "spiral":
+            turns = 2 + int(norm[8] * 4)  # 2-6 tours
+            draw_spiral(paint_layer, (px, py), size, color, rng, turns=turns)
+        elif shape == "wave":
+            draw_wave(paint_layer, (px, py), size, color, rng)
+        elif shape == "cloud":
+            draw_cloud(paint_layer, (px, py), size, color, rng)
 
     painted = Image.composite(
         paint_layer, Image.new("RGBA", (W, H), (0, 0, 0, 0)), mask
