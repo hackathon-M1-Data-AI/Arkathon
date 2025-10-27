@@ -1,0 +1,4 @@
+certifi==2025.10.5
+packaging==25.0
+setuptools==80.9.0
+wheel==0.45.1
