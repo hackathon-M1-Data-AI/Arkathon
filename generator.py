@@ -1,4 +1,3 @@
-# expressive_from_csv_no_arcs.py
 from PIL import Image, ImageDraw, ImageFilter
 import pandas as pd, numpy as np
 import hashlib, math, sys
