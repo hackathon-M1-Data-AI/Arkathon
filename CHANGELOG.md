@@ -1,6 +1,12 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## [0.2.0] - 2025-10-27
+
+### ✨ Features
+- Feature/art generator (#4) ([ed49e47](https://github.com/hackathon-M1-Data-AI/Arkathon/commit/ed49e47))
+
+
 ## [0.1.0] - 2025-10-27
 
 ### ✨ Features
