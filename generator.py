@@ -3,6 +3,7 @@ from PIL import Image, ImageDraw, ImageFilter
 import pandas as pd, numpy as np
 import hashlib, math, sys
 
+# W, H = 15360, 8640
 W, H = 1080, 720
 
 class RowRNG:
