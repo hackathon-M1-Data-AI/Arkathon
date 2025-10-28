@@ -1,6 +1,15 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## [0.3.1] - 2025-10-28
+
+### 🐛 Bug Fixes
+- Merge pull request #7 from hackathon-M1-Data-AI/bugFix/AdjustementReadMe ([ed6db0a](https://github.com/hackathon-M1-Data-AI/Arkathon/commit/ed6db0a))
+
+### 📝 Other Changes
+- Update ReadMe.md ([c8705cb](https://github.com/hackathon-M1-Data-AI/Arkathon/commit/c8705cb))
+
+
 ## [0.3.0] - 2025-10-28
 
 ### ✨ Features
