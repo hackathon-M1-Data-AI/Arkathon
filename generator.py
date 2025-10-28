@@ -92,15 +92,15 @@ def build_palette(csv_text: str):
     base = sha_int(csv_text) % 360
     hues = [
         base,
-        (base + 20) % 360,
-        (base + 160) % 360,
-        (base + 200) % 360,
+        (base + 30) % 360,
+        (base + 280) % 360,
+        (base + 340) % 360,
         (base + 300) % 360,
     ]
-    colors = [hsl_to_rgb(H, 0.70, 0.55) for H in hues]
+    colors = [hsl_to_rgb(H, 3.0, 0.5) for H in hues]
     accents = [
-        hsl_to_rgb((base + 40) % 360, 0.55, 0.70),
-        hsl_to_rgb((base + 220) % 360, 0.50, 0.75),
+        hsl_to_rgb((base + 60) % 360, 5.0, 0.6),
+        hsl_to_rgb((base + 210) % 360, 5.0, 0.5),
     ]
     return {"paint": colors + accents}
 
