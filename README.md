@@ -14,7 +14,7 @@ Ce projet génère des images abstraites expressives à partir de fichiers CSV c
 
 Le générateur transforme des données brutes en art visuel en mappant chaque ligne du CSV vers un élément graphique dont l'apparence est contrôlée par les paramètres numériques.
 
-## �� Structure du fichier d'entrée attendue
+## 📝📝 Structure du fichier d'entrée attendue
 
 Le fichier CSV doit contenir les colonnes suivantes :
 
