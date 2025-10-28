@@ -1,6 +1,13 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## [0.3.2] - 2025-10-28
+
+### 📝 Other Changes
+- Merge pull request #8 from hackathon-M1-Data-AI/main-1.0 ([aae4ad8](https://github.com/hackathon-M1-Data-AI/Arkathon/commit/aae4ad8))
+- Update generator.py ([39626e2](https://github.com/hackathon-M1-Data-AI/Arkathon/commit/39626e2))
+
+
 ## [0.3.1] - 2025-10-28
 
 ### 🐛 Bug Fixes
