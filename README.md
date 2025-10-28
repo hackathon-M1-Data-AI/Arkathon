@@ -2,15 +2,15 @@
 
 ## 🎨 Présentation de l'équipe
 
-- **Nolan** - Développeur Backend et Data Engineer
-- **Sofourath AGNILA** - Data IA
-- **Valentin Bancel** - Développeur Web, IA Data et DevOps
-- **Sada Sanoko** - Data Engineer
+- **BERGER Nolan** - Développeur Backend et Data Engineer
+- **AGNILA Sofourath** - Data IA
+- **BANCEL Valentin** - Développeur Web, IA Data et DevOps
+- **SANOKO Sada** - Data Engineer
 - **GUEYE SECK Awa Coumba** - Master en Data Engineer : manipulation, analyses et traitement de données
 
 ## 📝 Description du projet
 
-Ce projet génère des images abstraites expressives à partir de fichiers CSV contenant des paramètres numériques. Le programme utilise ces données pour créer des compositions artistiques uniques avec différents types de formes (blob, stroke, splatter), chacune influencée par les valeurs des colonnes du CSV.
+Ce projet génère des images abstraites expressives à partir de fichiers CSV contenant des paramètres numériques. Le programme utilise ces données pour créer des compositions artistiques uniques avec différents types de formes (blob, stroke, splatter, spiral, wave, cloud), chacune influencée par les valeurs des colonnes du CSV.
 
 Le générateur transforme des données brutes en art visuel en mappant chaque ligne du CSV vers un élément graphique dont l'apparence est contrôlée par les paramètres numériques.
 
@@ -18,7 +18,7 @@ Le générateur transforme des données brutes en art visuel en mappant chaque l
 
 Le fichier CSV doit contenir les colonnes suivantes :
 
-- **shape** : Type de forme à dessiner (`blob`, `stroke`, ou `splatter`)
+- **shape** : Type de forme à dessiner (`blob`, `stroke`,`splatter`,`spiral`,`wave`,`cloud`)
 - **z** : Ordre de superposition des éléments (optionnel)
 - **Colonnes numériques** : Les colonnes suivantes contiennent des valeurs numériques qui contrôlent l'apparence visuelle
 
@@ -34,7 +34,7 @@ Le fichier CSV doit contenir les colonnes suivantes :
 | 5 | vigor (énergie) | Jitter/irrégularité des traits + nombre/ampleur des gouttes ("splatter") |
 | 6 | curveX | Courbure latérale du "stroke" (contrôle la forme de l'arche du trait) |
 | 7 | curveY | Courbure verticale du "stroke" |
-| 8 | rx factor | Coefficient de rayon horizontal (peu utilisé) |
+| 8 | spiral turns / wave freq | Nombre de tours pour "spiral" (2-6) / Fréquence pour "wave" |
 | 9 | ry factor | Coefficient de rayon vertical (peu utilisé) |
 | 10 | — | Non utilisé directement (mais peut influencer l'échelle de normalisation) |
 | 11 | — | Non utilisé directement (idem) |
@@ -43,17 +43,45 @@ Le fichier CSV doit contenir les colonnes suivantes :
 
 ### Formes acceptées
 
-Le programme reconnaît trois types de formes dans la colonne `shape` :
-- **`blob`** : Formes organiques rondes avec des anneaux semi-transparents
-- **`stroke`** : Traits courbes avec contrôle de courbure
-- **`splatter`** : Éclaboussures directionnelles
+Le programme reconnaît six types de formes dans la colonne `shape` :
+
+#### 🔵 **`blob`**
+- **Description** : Formes organiques rondes avec des anneaux semi-transparents
+- **Caractéristiques** : 3-6 anneaux concentriques, variations aléatoires du rayon
+- **Meilleur usage** : Éléments doux et organiques, zones de couleur diffuses
+
+#### ➰ **`stroke`**
+- **Description** : Traits courbes avec contrôle de courbure (courbe de Bézier)
+- **Caractéristiques** : Contrôle de la courbure via curveX et curveY, effet main levée
+- **Meilleur usage** : Lignes expressives, gestes calligraphiques
+
+#### 💥 **`splatter`**
+- **Description** : Éclaboussures directionnelles avec particules
+- **Caractéristiques** : 60-140 particules selon le paramètre vigor, distribution conique
+- **Meilleur usage** : Effets dynamiques, explosions de couleur
+
+#### 🌀 **`spiral`**
+- **Description** : Spirales organiques avec variations de rayon
+- **Caractéristiques** : 2-6 tours configurables, épaisseur décroissante, variations sinusoïdales
+- **Meilleur usage** : Mouvements circulaires, énergie tourbillonnante
+
+#### 🌊 **`wave`**
+- **Description** : Motifs d'ondes fluides concentriques
+- **Caractéristiques** : 3-8 ondes par forme, fréquences variables, formes fermées
+- **Meilleur usage** : Flux liquides, ondulations organiques, textures aquatiques
+
+#### ☁️ **`cloud`**
+- **Description** : Nuages de particules avec distribution gaussienne
+- **Caractéristiques** : 40-120 particules, clustering naturel, transparence dégradée
+- **Meilleur usage** : Textures diffuses, effets atmosphériques, masses organiques
+
 
 ## 🚀 Instructions complètes pour la récupération et le lancement du programme
 
 ### Prérequis
 
-- Python 3.14 ou supérieur
-- pip (gestionnaire de paquets Python)
+- Python 3.12 ou supérieur
+- pip ou uv (gestionnaire de paquets Python)  
 
 ### Installation
 
@@ -122,9 +150,12 @@ Pour chaque ligne du CSV (dans l'ordre z si présent) :
 - **Extraction des paramètres** : position (x, y), taille, angle, épaisseur, vigueur, courbures
 - **Sélection de la couleur** : basée sur le hash de la ligne
 - **Dessin selon le type de forme** :
-  - `blob` : Polygones concentriques irréguliers avec transparence dégradée
-  - `stroke` : Courbe de Bézier quadratique avec bruit ajouté pour un effet main levée
-  - `splatter` : Série d'ellipses le long d'une trajectoire angulaire
+  - **`blob`** : Polygones concentriques irréguliers avec transparence dégradée
+  - **`stroke`** : Courbe de Bézier quadratique avec bruit ajouté pour un effet main levée
+  - **`splatter`** : Série d'ellipses le long d'une trajectoire angulaire
+  - **`spiral`** : Ligne spiralée avec variations organiques et épaisseur décroissante
+  - **`wave`** : Lignes ondulées concentriques avec fréquences variables
+  - **`cloud`** : Distribution gaussienne de particules avec transparence dégradée
 
 ### 5. Composition finale
 - Application du masque elliptique au calque de peinture
@@ -140,9 +171,6 @@ Le dépôt contient plusieurs fichiers de démonstration :
 - `radical_100.csv` : Échantillon moyen (100 éléments)
 - `radical_500.csv` : Grand échantillon (500 éléments)
 - `radical_5000.csv` : Très grand échantillon (5000 éléments)
-
-### Images de test
-- `test1.png`, `test2.png`, `test3.png`, `test4.png` : Exemples de rendus générés
 
 ### Autres fichiers
 - `requirements.txt` : Dépendances du projet
@@ -163,10 +191,20 @@ Le dépôt contient plusieurs fichiers de démonstration :
 - Les couleurs sont générées de manière cohérente à partir du contenu global du CSV
 - Le masque elliptique avec flou crée un effet de vignettage artistique
 
+## 🎨 Conseils de composition
+
+### Combinaisons de formes efficaces
+
+- **Fond de texture** : Utilisez `cloud` avec de grandes tailles pour créer des fonds atmosphériques
+- **Éléments structurels** : `stroke` et `spiral` pour les lignes directrices de la composition
+- **Accents dynamiques** : `splatter` pour ajouter de l'énergie et du mouvement
+- **Transitions fluides** : `wave` pour connecter visuellement différentes zones
+- **Zones de focus** : `blob` pour créer des points d'intérêt doux
+
 ## 🎯 Exemple de workflow complet
 
 1. Préparez votre fichier CSV avec les colonnes appropriées
-2. Assurez-vous que la colonne `shape` contient uniquement `blob`, `stroke` ou `splatter`
+2. Assurez-vous que la colonne `shape` contient uniquement les formes valides : `blob`, `stroke`, `splatter`, `spiral`, `wave`, ou `cloud`
 3. Exécutez le générateur : `python generator.py votre_fichier.csv sortie.png`
 4. L'image résultante sera sauvegardée dans le fichier spécifié
 
