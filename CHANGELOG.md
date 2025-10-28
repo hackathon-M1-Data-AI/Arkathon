@@ -1,6 +1,16 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## [0.3.0] - 2025-10-28
+
+### ✨ Features
+- Merge pull request #6 from hackathon-M1-Data-AI/feature_new_shape ([f8108fc](https://github.com/hackathon-M1-Data-AI/Arkathon/commit/f8108fc))
+
+### 📝 Other Changes
+- Update radical new shape ([76848dc](https://github.com/hackathon-M1-Data-AI/Arkathon/commit/76848dc))
+- Add new shape ([c2dbcac](https://github.com/hackathon-M1-Data-AI/Arkathon/commit/c2dbcac))
+
+
 ## [0.2.1] - 2025-10-27
 
 ### 📝 Other Changes
