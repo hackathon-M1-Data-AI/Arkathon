@@ -1,6 +1,16 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## [0.4.0] - 2025-10-28
+
+### ✨ Features
+- Merge pull request #11 from hackathon-M1-Data-AI/feature/clean_comment ([62e7986](https://github.com/hackathon-M1-Data-AI/Arkathon/commit/62e7986))
+
+### 📝 Other Changes
+- refactor: update French docstrings for clarity and consistency in generator.py ([61fe6a7](https://github.com/hackathon-M1-Data-AI/Arkathon/commit/61fe6a7))
+- refactor: remove redundant docstring parameters and clean up comments in generator.py ([bd55511](https://github.com/hackathon-M1-Data-AI/Arkathon/commit/bd55511))
+
+
 ## [0.3.2] - 2025-10-28
 
 ### 📝 Other Changes
